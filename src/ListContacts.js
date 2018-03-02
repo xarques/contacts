@@ -14,14 +14,18 @@ class ListContacts extends Component {
   }
 
   updateQuery = (query) => {
-    this.setState({query: query.trim()})
+    this.setState({query: query.trim()});
+  }
+
+  clearQuery = () => {
+    this.setState({query: ''});
   }
 
   render() {
     // Destructuring
     const { contacts, onDeleteContact } = this.props;
     const { query } = this.state;
-    
+
     let showingContacts;
 
     if (query) {
@@ -44,6 +48,13 @@ class ListContacts extends Component {
           onChange={(event) => this.updateQuery(event.target.value)}
         />
       </div>
+
+      {showingContacts.length !== contacts.length && (
+        <div className='showing-contacts'>
+            <span>Showing {showingContacts.length} of {contacts.length}</span>
+            <button onClick={this.clearQuery}>Show all</button>
+        </div>
+        )}
         <ol className='contact-list'>
           {showingContacts.map((contact) => (
             <li key={contact.id} className='contact-list-item'>
